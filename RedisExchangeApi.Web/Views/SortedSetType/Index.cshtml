@@ -1,0 +1,160 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model HashSet<(string, int)>
+
+
+<div class="row">
+
+
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                Redis Sorted Set Type Liste Tipine Veri Ekleme
+            </div>
+            <div class="card-body">
+                <form asp-controller="SortedSetType" asp-action="Add" method="post" enctype="application/x-www-form-urlencoded">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <input type="text" name="name" required class="form-control form-control-sm" placeholder="Name" />
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" name="score" required class="form-control form-control-sm" placeholder="Score" />
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn-primary btn-sm">Sıralı Listeye Ekle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-body p-0 border-0">
+
+                <ul class="list-group">
+                    @{
+                        foreach (var item in Model)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                                @item.Item1, Score : @item.Item2
+                                <a asp-controller="SortedSetType" asp-action="Remove" asp-route-name="@item.Item1" class="btn btn-danger btn-sm">Sil</a>
+                            </li>
+                        }
+                    }
+
+                </ul>
+            </div>
+            <div class="card-footer">
+                Listede toplam @ViewBag.Total adet kayıt var.
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+<div class="container py-5 px-0">
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Redis Sorted Set Nedir?
+        </div>
+        <div class="card-body">
+            <p><strong>Sorted Set (ZSET)</strong>, Redis'te sıralı (sorted) ve benzersiz (unique) elemanlar tutar. Her öğenin bir <strong>score (puan)</strong> değeri vardır ve bu değere göre sıralanır.</p>
+            <pre><code>ZADD leaderboard 100 "user1"
+ZADD leaderboard 150 "user2"
+ZADD leaderboard 120 "user3"</code></pre>
+            <p>Bu örnekte <code>user2</code> en yüksek skora sahip olur.</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            C# Karşılığı
+        </div>
+        <div class="card-body">
+            <p>C# tarafında genellikle <strong>SortedDictionary&lt;string, double&gt;</strong> veya <strong>List&lt;Tuple&lt;string, double&gt;&gt;</strong> gibi yapılarda temsil edilir.</p>
+            <h6>Örnek:</h6>
+            <pre><code>var leaderboard = new SortedDictionary&lt;double, string&gt;
+{
+    { 100, "user1" },
+    { 150, "user2" },
+    { 120, "user3" }
+};</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-warning text-dark">
+            StackExchange.Redis ile Sorted Set Kullanımı
+        </div>
+        <div class="card-body">
+            <h6>Veri Eklemek:</h6>
+            <pre><code>IDatabase db = redis.GetDatabase();
+
+db.SortedSetAdd("leaderboard", "user1", 100);
+db.SortedSetAdd("leaderboard", "user2", 150);
+db.SortedSetAdd("leaderboard", "user3", 120);</code></pre>
+
+            <h6>Verileri Skora Göre Getirmek:</h6>
+            <pre><code>var results = db.SortedSetRangeByScoreWithScores("leaderboard", order: Order.Descending);
+
+foreach (var entry in results)
+{
+    Console.WriteLine($"{entry.Element} - {entry.Score}");
+}</code></pre>
+
+            <h6>Skor Güncellemek:</h6>
+            <pre><code>db.SortedSetIncrement("leaderboard", "user1", 10); // user1 puanı 110 olur</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            Özet Tablo
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Redis Komutu</th>
+                        <th>Açıklama</th>
+                        <th>C# Karşılığı</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ZADD</code></td>
+                        <td>Sorted Set'e eleman ve skor ekler</td>
+                        <td><code>SortedSet.Add</code> benzeri</td>
+                    </tr>
+                    <tr>
+                        <td><code>ZRANGE</code>, <code>ZREVRANGE</code></td>
+                        <td>Belirli sıradaki elemanları getirir</td>
+                        <td><code>foreach</code> sıralı diziler</td>
+                    </tr>
+                    <tr>
+                        <td><code>ZSCORE</code></td>
+                        <td>Bir elemanın skorunu getirir</td>
+                        <td><code>dict[key]</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>ZINCRBY</code></td>
+                        <td>Bir elemanın skorunu arttırır</td>
+                        <td><code>dict[key] += value</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

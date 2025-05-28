@@ -1,0 +1,161 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model HashSet<string>
+
+
+<div class="row">
+
+
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                Redis Set Type Liste Tipine Veri Ekleme
+            </div>
+            <div class="card-body">
+                <form asp-controller="SetType" asp-action="Add" method="post" enctype="application/x-www-form-urlencoded">
+                    <input type="text" name="brand" required class="form-control form-control-sm" />
+                    <button type="submit" class="btn-primary btn-sm mt-2">Listeye Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-body p-0 border-0">
+
+                <ul class="list-group">
+                    @{
+                        foreach (var car in Model)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                            @car
+                                <a asp-controller="SetType" asp-action="Remove" asp-route-brand="@car" class="btn btn-danger btn-sm">Sil</a>
+                            </li>
+                        }
+                    }
+
+                </ul>
+            </div>
+            <div class="card-footer">
+                Listede toplam @ViewBag.CarCount adet kayıt var.
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+
+<div class="container py-5 px-0">
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Redis Set Nedir?
+        </div>
+        <div class="card-body">
+            <p>Redis <strong>Set</strong> veri tipi, benzersiz (unique) öğelerden oluşan, sırasız bir koleksiyondur.</p>
+            <pre><code>SADD myset "apple"
+SADD myset "banana"
+SADD myset "cherry"
+SADD myset "apple"  # Bu eklenmez çünkü zaten var</code></pre>
+            <p>Set içinde aynı değer birden fazla kez yer alamaz.</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            C# Karşılığı
+        </div>
+        <div class="card-body">
+            <p>C# tarafında Redis Set yapısı, <strong>HashSet&lt;string&gt;</strong> ile temsil edilir.</p>
+            <h6>Örnek:</h6>
+            <pre><code>var mySet = new HashSet&lt;string&gt;
+{
+    "apple",
+    "banana",
+    "cherry"
+};</code></pre>
+            <p>Aynı değer ikinci kez eklenmek istendiğinde <code>HashSet</code> bunu engeller.</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-warning text-dark">
+            StackExchange.Redis ile Set Kullanımı
+        </div>
+        <div class="card-body">
+            <h6>Veri Eklemek:</h6>
+            <pre><code>IDatabase db = redis.GetDatabase();
+
+db.SetAdd("myset", "apple");
+db.SetAdd("myset", "banana");
+db.SetAdd("myset", "cherry");</code></pre>
+
+            <h6>Veri Okumak:</h6>
+            <pre><code>RedisValue[] members = db.SetMembers("myset");
+
+foreach (var item in members)
+{
+    Console.WriteLine(item);
+}</code></pre>
+
+            <h6>Veri Silmek:</h6>
+            <pre><code>db.SetRemove("myset", "banana");</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            Özet Tablo
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Redis Komutu</th>
+                        <th>Açıklama</th>
+                        <th>C# Karşılığı</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>SADD</code></td>
+                        <td>Set'e benzersiz bir eleman ekler</td>
+                        <td><code>HashSet.Add</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>SMEMBERS</code></td>
+                        <td>Set içindeki tüm elemanları getirir</td>
+                        <td><code>foreach (var item in mySet)</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>SREM</code></td>
+                        <td>Set’ten bir eleman siler</td>
+                        <td><code>HashSet.Remove</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>SISMEMBER</code></td>
+                        <td>Belirli bir eleman var mı kontrol eder</td>
+                        <td><code>HashSet.Contains</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+

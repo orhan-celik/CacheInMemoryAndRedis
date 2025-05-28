@@ -1,0 +1,148 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    List<string> colorList = ViewBag.Colors;
+}
+
+
+<div class="row">
+
+
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                Redis Liste Tipine Veri Ekleme
+            </div>
+            <div class="card-body">
+
+                <form action="ListType/Add" method="post" enctype="application/x-www-form-urlencoded">
+                    <input type="text" name="color" required class="form-control form-control-sm" />
+                    <button type="submit" class="btn-primary btn-sm mt-2">Listeye Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-body p-0 border-0">
+
+                <ul class="list-group">
+                    @{
+                        foreach (var color in colorList)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">@color <a href="/ListType/Remove/@color" class="btn btn-danger btn-sm">Sil</a> </li>
+                        }
+                    }
+
+                </ul>
+            </div>
+            <div class="card-footer">
+                Listede toplam @ViewBag.ColorsCount adet kayıt var.
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+
+<div class="container py-5">
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Redis List Nedir?
+        </div>
+        <div class="card-body">
+            <p>Redis <strong>List</strong> veri tipi, sıralı bir öğe koleksiyonudur (linked list gibi). Elemanlar hem başa (<code>LPUSH</code>) hem sona (<code>RPUSH</code>) eklenebilir.</p>
+            <pre><code>LPUSH mylist "a"
+RPUSH mylist "b"
+RPUSH mylist "c"
+LRANGE mylist 0 -1</code></pre>
+            <p>Bu işlemler sonunda <code>mylist</code> şuna benzer: <code>[a, b, c]</code></p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            C# Karşılığı
+        </div>
+        <div class="card-body">
+            <p>Redis List veri tipi, C# tarafında <strong>List&lt;string&gt;</strong> ya da <strong>Queue</strong> gibi veri yapılarıyla temsil edilir.</p>
+
+            <h6>List ile örnek:</h6>
+            <pre><code>var myList = new List&lt;string&gt; { "a", "b", "c" };</code></pre>
+
+            <h6>Queue (FIFO) örneği:</h6>
+            <pre><code>var queue = new Queue&lt;string&gt;();
+queue.Enqueue("a");
+queue.Enqueue("b");
+queue.Enqueue("c");</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-warning text-dark">
+            StackExchange.Redis ile List Kullanımı
+        </div>
+        <div class="card-body">
+            <h6>Veri Eklemek:</h6>
+            <pre><code>IDatabase db = redis.GetDatabase();
+
+db.ListLeftPush("mylist", "a");
+db.ListRightPush("mylist", "b");
+db.ListRightPush("mylist", "c");</code></pre>
+
+            <h6>Veri Okumak:</h6>
+            <pre><code>RedisValue[] items = db.ListRange("mylist");
+
+foreach (var item in items)
+{
+    Console.WriteLine(item);
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            Özet Tablo
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Redis Komutu</th>
+                        <th>Açıklama</th>
+                        <th>C# Karşılığı</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>LPUSH</code>, <code>RPUSH</code></td>
+                        <td>Listeye baştan veya sondan eleman ekler</td>
+                        <td><code>List.Add</code>, <code>Queue.Enqueue</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>LRANGE mylist 0 -1</code></td>
+                        <td>Listedeki tüm elemanları getirir</td>
+                        <td><code>List.ForEach</code> / <code>foreach</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>LPOP</code>, <code>RPOP</code></td>
+                        <td>Listenin başından/sonundan eleman siler</td>
+                        <td><code>List.RemoveAt</code>, <code>Queue.Dequeue</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

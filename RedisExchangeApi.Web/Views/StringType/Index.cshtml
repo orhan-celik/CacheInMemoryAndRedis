@@ -1,0 +1,85 @@
+﻿<div class="container py-5">
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Redis String Nedir?
+        </div>
+        <div class="card-body">
+            <p><strong>String</strong>, Redis’in en temel veri tipidir. Tek bir anahtar altında metin, sayı veya JSON gibi değerleri saklayabilirsin.</p>
+            <pre><code>SET username "memobi"
+GET username</code></pre>
+            <p>String aynı zamanda sayaç gibi de kullanılabilir:</p>
+            <pre><code>INCR pageviews</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            C# Karşılığı
+        </div>
+        <div class="card-body">
+            <p>C# tarafında Redis String, <code>string</code> veri tipiyle temsil edilir.</p>
+            <pre><code>string username = "memobi";</code></pre>
+            <p>Redis içinde saklanan değer doğrudan string olarak alınır ve işlenebilir.</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-warning text-dark">
+            StackExchange.Redis ile String Kullanımı
+        </div>
+        <div class="card-body">
+            <h6>Değer Yazmak:</h6>
+            <pre><code>IDatabase db = redis.GetDatabase();
+db.StringSet("username", "memobi");</code></pre>
+
+            <h6>Değer Okumak:</h6>
+            <pre><code>string username = db.StringGet("username");
+Console.WriteLine(username);</code></pre>
+
+            <h6>Sayaç gibi Kullanım (INCR/DECR):</h6>
+            <pre><code>db.StringIncrement("pageviews"); // +1
+db.StringDecrement("pageviews"); // -1</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            Özet Tablo
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Redis Komutu</th>
+                        <th>Açıklama</th>
+                        <th>C# Karşılığı</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>SET</code></td>
+                        <td>Bir değeri kaydeder</td>
+                        <td><code>string value = "x"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>GET</code></td>
+                        <td>Kaydedilen değeri getirir</td>
+                        <td><code>string value = ...</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>INCR/DECR</code></td>
+                        <td>Sayısal değeri artırır/azaltır</td>
+                        <td><code>int ++ / --</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>APPEND</code></td>
+                        <td>Mevcut değerin sonuna ekleme yapar</td>
+                        <td><code>+=</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

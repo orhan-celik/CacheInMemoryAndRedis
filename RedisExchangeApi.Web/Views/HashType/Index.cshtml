@@ -1,0 +1,156 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Dictionary<string, string>
+
+<div class="row">
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                Redis Hash Type Liste Tipine Veri Ekleme
+            </div>
+            <div class="card-body">
+                <form asp-controller="HashType" asp-action="Add" method="post" enctype="application/x-www-form-urlencoded">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" name="key" required class="form-control form-control-sm" placeholder="Key" />
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" name="val" required class="form-control form-control-sm" placeholder="Value" />
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn-primary btn-sm">Hash Type Listesine Ekle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-body p-0 border-0">
+
+                <ul class="list-group">
+                    @{
+                        foreach (var item in Model)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                                Key : @item.Key => Value : @item.Value
+                                <a asp-controller="HashType" asp-action="Remove" asp-route-name="@item.Key" class="btn btn-danger btn-sm">Sil</a>
+                            </li>
+                        }
+                    }
+
+                </ul>
+            </div>
+            <div class="card-footer">
+                Listede toplam @ViewBag.Total adet kayıt var.
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+
+<div class="container py-5 px-0">
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Redis Hash Nedir?
+        </div>
+        <div class="card-body">
+            <p>Redis'te Hash veri tipi, bir anahtar altında birden fazla alan-değer çiftini saklamaya yarar.</p>
+            <pre><code>HSET user:1000 name "Ali" age "30" city "Istanbul"</code></pre>
+            <p>Bu komutla <code>user:1000</code> adında bir hash oluşturulup üç adet alan eklenmiş olur.</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            C# Karşılığı
+        </div>
+        <div class="card-body">
+            <p>Redis Hash yapısı C# tarafında şu şekilde temsil edilebilir:</p>
+
+            <h6>Dictionary ile:</h6>
+            <pre><code>var user = new Dictionary&lt;string, string&gt;
+{
+    { "name", "Ali" },
+    { "age", "30" },
+    { "city", "Istanbul" }
+};</code></pre>
+
+            <h6>Veya bir model sınıfı ile:</h6>
+            <pre><code>public class User
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public string City { get; set; }
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-warning text-dark">
+            StackExchange.Redis ile Hash Kullanımı
+        </div>
+        <div class="card-body">
+            <h6>Veri Yazma:</h6>
+            <pre><code>IDatabase db = redis.GetDatabase();
+
+var userKey = "user:1000";
+db.HashSet(userKey, new HashEntry[]
+{
+    new HashEntry("name", "Ali"),
+    new HashEntry("age", "30"),
+    new HashEntry("city", "Istanbul")
+});</code></pre>
+
+            <h6>Veri Okuma:</h6>
+            <pre><code>HashEntry[] hashEntries = db.HashGetAll("user:1000");
+foreach (var entry in hashEntries)
+{
+    Console.WriteLine($"{entry.Name} : {entry.Value}");
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            Özet Tablo
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Redis Hash</th>
+                        <th>C# Karşılığı</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>HSET key field value</code></td>
+                        <td><code>Dictionary&lt;string, string&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Hash Veri Tipi</td>
+                        <td>Custom class (ör. <code>User</code>)</td>
+                    </tr>
+                    <tr>
+                        <td><code>HGET</code>, <code>HSET</code></td>
+                        <td><code>db.HashGet</code>, <code>db.HashSet</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

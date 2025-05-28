@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheInMemoryAndRedis.InMemoryApp", "CacheInMemoryAndRedis.InMemoryApp\CacheInMemoryAndRedis.InMemoryApp.csproj", "{320DB483-D292-4892-9CB8-DF56B6603A52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheInMemoryAndRedis.IDistributedCacheRedisApp", "CacheInMemoryAndRedis.IDistributedCacheRedisApp\CacheInMemoryAndRedis.IDistributedCacheRedisApp.csproj", "{15B7FFF7-CA40-42CF-A97D-C9BFF2B8E890}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisExchangeApi.Web", "RedisExchangeApi.Web\RedisExchangeApi.Web.csproj", "{68D54DB5-E6CF-4E2F-B022-565B42B9E21C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{320DB483-D292-4892-9CB8-DF56B6603A52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{320DB483-D292-4892-9CB8-DF56B6603A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{320DB483-D292-4892-9CB8-DF56B6603A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{320DB483-D292-4892-9CB8-DF56B6603A52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15B7FFF7-CA40-42CF-A97D-C9BFF2B8E890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B7FFF7-CA40-42CF-A97D-C9BFF2B8E890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B7FFF7-CA40-42CF-A97D-C9BFF2B8E890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B7FFF7-CA40-42CF-A97D-C9BFF2B8E890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68D54DB5-E6CF-4E2F-B022-565B42B9E21C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68D54DB5-E6CF-4E2F-B022-565B42B9E21C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68D54DB5-E6CF-4E2F-B022-565B42B9E21C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68D54DB5-E6CF-4E2F-B022-565B42B9E21C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {65F882A8-8D27-4485-9DFE-F0A953A7BD73}
+	EndGlobalSection
+EndGlobal

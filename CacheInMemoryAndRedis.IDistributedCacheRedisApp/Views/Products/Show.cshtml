@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Product product1 = ViewBag.Product1 as Product;
+    Product product2 = ViewBag.Product2 as Product;
+}
+
+
+
+
+Company Name : @ViewBag.CompanyName
+
+<hr>
+
+<h1>Cache Ürün 1 Bilgileri</h1>
+Id : @product1.Id
+<br>
+Name : @product1.Name
+<br>
+Price : @product1.Price
+
+<hr>
+
+<h1>Cache Ürün 2 Bilgileri</h1>
+Id : @product2.Id
+<br>
+Name : @product2.Name
+<br>
+Price : @product2.Price
+
+<hr>
+
+<img src="/Products/ImageUrl" />
