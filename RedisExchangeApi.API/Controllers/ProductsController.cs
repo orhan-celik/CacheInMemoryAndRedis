@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RedisExchangeApi.API.Entities;
 using RedisExchangeApi.API.Repositories;
+using RedisExchangeApi.API.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,32 +13,32 @@ namespace RedisExchangeApi.API.Controllers
     public class ProductsController : ControllerBase
     {
 
-        private readonly IProductRepository _productRepository;
+        private readonly IProductService _productService;
 
-        public ProductsController(IProductRepository productRepository)
+        public ProductsController(IProductService productService)
         {
-            _productRepository = productRepository;
+            _productService = productService;
         }
 
         // GET: api/<ProductsController>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _productRepository.GetAsync());
+            return Ok(await _productService.GetAsync());
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            return Ok(await _productRepository.GetByIdAsync(id));
+            return Ok(await _productService.GetByIdAsync(id));
         }
 
         // POST api/<ProductsController>
         [HttpPost]
         public async Task<IActionResult> Create(Product product)
         {
-            return Created(string.Empty, await _productRepository.CreateAsync(product));
+            return Created(string.Empty, await _productService.CreateAsync(product));
         }
     }
 }
